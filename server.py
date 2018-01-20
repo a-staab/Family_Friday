@@ -5,8 +5,11 @@ from flask_debugtoolbar import DebugToolbarExtension
 app = Flask(__name__)
 
 
+@app.route("/")
+def show_main():
+    """Return landing page."""
 
-
+    return render_template("main.html")
 
 
 
