@@ -3,6 +3,16 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 
+class Employee(db.Model):
+    """An employee."""
+
+    __tablename__ = "employees"
+
+    staff_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    first_name = db.Column(db.Unicode(30), nullable=False)
+    last_name = db.Column(db.Unicode(30), nullable=False)
+
+
 def connect_to_db(app, db_uri='postgresql:///staff_directory'):
     """Connect to the database."""
 
