@@ -1,7 +1,7 @@
 from flask import Flask, request, render_template
 from model import db, connect_to_db
 from flask_debugtoolbar import DebugToolbarExtension
-from random import choice
+from random import sample
 from model import Employee
 import os
 
@@ -52,19 +52,19 @@ def get_table_sizes(teammates):
     # TODO: Possibly write recursively?
 
 
-def make_tables(num_assignees, num_tables, remaining_teammates, all_tables):
+def make_tables(num_assignees, num_tables, unassigned_teammates, all_tables):
     """Given a list of teammates, assigns the given number of tables the given
-    number of teammates and returns any unassigned teammates."""
+    number of teammates randomly and returns any unassigned teammates."""
 
     tables = []
     for i in range(num_tables):
-        tables.append([])
-        for j in range(num_assignees):
-            tables[i].append(remaining_teammates.pop())
+        random_assignment = sample(unassigned_teammates, num_assignees)
+        tables.append(random_assignment)
+        unassigned_teammates.difference_update(random_assignment)
 
     all_tables.extend(tables)
 
-    return remaining_teammates
+    return unassigned_teammates
 
 
 def get_all_tables():
@@ -72,10 +72,13 @@ def get_all_tables():
     people each."""
 
     all_tables = []
-    teammates = Employee.query.all()
+    teammates = set(Employee.query.all())
 
     for num_assignees, num_tables in get_table_sizes(teammates):
-        teammates = make_tables(num_assignees, num_tables, teammates, all_tables)
+        teammates = make_tables(num_assignees,
+                                num_tables,
+                                teammates,
+                                all_tables)
 
     return all_tables
 
