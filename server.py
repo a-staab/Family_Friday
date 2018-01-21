@@ -51,28 +51,33 @@ def get_table_sizes(teammates):
 
     # TODO: Possibly write recursively?
 
-get_table_sizes(teammates) = [(5, 4), (3, 1), (4, 1)]
 
-all_tables = []
-teammates = teammates
-
-
-def make_tables(num_assignees, num_tables, teammates):
+def make_tables(num_assignees, num_tables, remaining_teammates, all_tables):
+    """Given a list of teammates, assigns the given number of tables the given
+    number of teammates and returns any unassigned teammates."""
 
     tables = []
     for i in range(num_tables):
         tables.append([])
         for j in range(num_assignees):
-            tables[i].append(teammates.pop())
+            tables[i].append(remaining_teammates.pop())
 
     all_tables.extend(tables)
 
-    return teammates
-
-for num_assignees, num_tables in get_table_sizes(teammates):
-    teammates = make_tables(num_assignees, num_tables, teammates)
+    return remaining_teammates
 
 
+def get_all_tables():
+    """Returns all staff, divided into groups of three, four, and/or five
+    people each."""
+
+    all_tables = []
+    teammates = Employee.query.all()
+
+    for num_assignees, num_tables in get_table_sizes(teammates):
+        teammates = make_tables(num_assignees, num_tables, teammates, all_tables)
+
+    return all_tables
 
 
 connect_to_db(app)
