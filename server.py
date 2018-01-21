@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, jsonify
 from model import db, connect_to_db
 from flask_debugtoolbar import DebugToolbarExtension
 from random import sample
@@ -13,10 +13,14 @@ app.secret_key = os.environ["SECRET_KEY"]
 def show_main():
     """Return landing page."""
 
-
-
-
     return render_template("main.html")
+
+
+@app.route("/get_tables", methods=["GET"])
+def display_groups():
+    """Route for AJAX request. Pushes table assignments to the view."""
+
+    return jsonify(get_all_tables())
 
 
 def get_table_sizes(teammates):

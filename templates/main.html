@@ -1,6 +1,7 @@
 <html>
 <head>
     <title>Family Friday Grouper</title>
+    <script src="http://code.jquery.com/jquery-3.2.1.js"></script>
 </head>
 <body>
     <div>
@@ -10,12 +11,28 @@
         <label for="last-name">Last name: </label>
         <input type="text" name="last-name" id="last-name"><br><br>
         <input type="submit" value="Add Team Member">
+    </form>
+    <input type="button" id="get-groups" value="Get Groups">
+    <div id="groups">
+        Here is some text.
     </div>
+    </div>
+    <script>
 
-    <div>
+        function showGroups(result) {
+            $('#groups').html(result);
+            // for (var i=0; i < result.length; i++) {
+            //     $('#groups').append(result[i]);
+            //     }
+            }
 
-    </div>
-    <div>
-    </div>
+        function makeGroups() {
+            $('#groups').empty();
+            $.get("/get_tables", showGroups);
+            }
+
+        $('#get-groups').on('click', makeGroups);
+
+    </script>
 </body>
 </html>
