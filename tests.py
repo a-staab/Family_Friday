@@ -1,6 +1,7 @@
 import unittest
 from server import app
 from model import db, connect_to_db, example_data
+from server import get_table_sizes, get_all_tables
 
 
 class Test(unittest.TestCase):
@@ -26,13 +27,24 @@ class Test(unittest.TestCase):
         db.session.close()
         db.drop_all()
 
-    def test_signup_page_render(self):
+    def test_main_page_load(self):
         """Tests that the page loads."""
 
         result = self.client.get("/")
         self.assertEqual(result.status_code, 200)
         self.assertIn("Last name:", result.data)
 
+    def test_get_all_tables(self):
+        """Integration test. Tests get_all_tables and dependencies, and
+        validates that app connects to database."""
+
+        result = get_all_tables()
+        self.assertEqual(len(result), 3)
+
+    def test_get_table_sizes(self):
+        """Unit test. Tests get_table_sizes function."""
+
+        self.assertEqual(get_table_sizes(['name'] * 11), [(5, 1), (3, 2)])
 
 
 if __name__ == '__main__':
