@@ -38,7 +38,8 @@ def display_groups():
     view_tables = []
 
     for i in range(len(tables)):
-        view_tables.append(['%s %s' % (x.first_name, x.last_name) for x in tables[i]])
+        view_tables.append(
+            ['%s %s' % (x.first_name, x.last_name) for x in tables[i]])
 
     return json.dumps(view_tables)
 
@@ -72,8 +73,6 @@ def get_table_sizes(teammates):
             return [(5, len(teammates) / 5), (3, 1)]
         elif remainder == 4:
             return [(5, len(teammates) / 5), (4, 1)]
-
-    # TODO: Possibly write recursively?
 
 
 def make_tables(num_assignees, num_tables, unassigned_teammates, all_tables):
