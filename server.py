@@ -1,8 +1,9 @@
-from flask import Flask, request, render_template, jsonify
+from flask import Flask, request, render_template, redirect
 from model import db, connect_to_db
 from flask_debugtoolbar import DebugToolbarExtension
 from random import sample
 from model import Employee
+import json
 import os
 
 app = Flask(__name__)
@@ -16,11 +17,30 @@ def show_main():
     return render_template("main.html")
 
 
+@app.route("/", methods=["POST"])
+def add_teammate_to_db():
+
+    first_name = request.form.get("first-name")
+    last_name = request.form.get("last-name")
+    new_teammate = Employee(first_name=first_name,
+                            last_name=last_name)
+    db.session.add(new_teammate)
+    db.session.commit()
+
+    return redirect("/")
+
+
 @app.route("/get_tables", methods=["GET"])
 def display_groups():
     """Route for AJAX request. Pushes table assignments to the view."""
 
-    return jsonify(get_all_tables())
+    tables = get_all_tables()
+    view_tables = []
+
+    for i in range(len(tables)):
+        view_tables.append(['%s %s' % (x.first_name, x.last_name) for x in tables[i]])
+
+    return json.dumps(view_tables)
 
 
 def get_table_sizes(teammates):

@@ -5,25 +5,24 @@
 </head>
 <body>
     <div>
-    <form action="/main" method="POST">
+    <form action="/" method="POST">
         <label for="first-name">First name: </label>
         <input type="text" name="first-name" id="first-name"><br>
         <label for="last-name">Last name: </label>
         <input type="text" name="last-name" id="last-name"><br><br>
         <input type="submit" value="Add Team Member">
     </form>
+    </div>
     <input type="button" id="get-groups" value="Get Groups">
     <div id="groups">
-        Here is some text.
-    </div>
     </div>
     <script>
 
         function showGroups(result) {
-            $('#groups').html(result);
-            // for (var i=0; i < result.length; i++) {
-            //     $('#groups').append(result[i]);
-            //     }
+            // $('#groups').html(result);
+            for (var i=0; i < result.length; i++) {
+                $('#groups').append(result[i]);
+                }
             }
 
         function makeGroups() {
