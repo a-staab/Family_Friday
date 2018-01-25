@@ -22,9 +22,21 @@ def add_teammate_to_db():
 
     first_name = request.form.get("first-name")
     last_name = request.form.get("last-name")
-    new_teammate = Employee(first_name=first_name,
-                            last_name=last_name)
-    db.session.add(new_teammate)
+    action = request.form.get("action")
+
+    if action == 'add':
+        new_teammate = Employee(first_name=first_name,
+                                last_name=last_name)
+        db.session.add(new_teammate)
+
+    elif action == 'disable':
+        teammate_to_disable = Employee.query.filter(Employee.first_name == first_name, Employee.last_name == last_name).one()
+        teammate_to_disable.is_active = False
+
+    elif action == 'reactivate':
+        teammate_to_reactivate = Employee.query.filter(Employee.first_name == first_name, Employee.last_name == last_name).one()
+        teammate_to_reactivate.is_active = True
+
     db.session.commit()
 
     return redirect("/")
@@ -95,7 +107,7 @@ def get_all_tables():
     people each."""
 
     all_tables = []
-    teammates = set(Employee.query.all())
+    teammates = set(Employee.query.filter(Employee.is_active == 'True').all())
 
     for num_assignees, num_tables in get_table_sizes(teammates):
         teammates = make_tables(num_assignees,

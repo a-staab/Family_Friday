@@ -28,13 +28,20 @@
             <input type="text" name="first-name" id="first-name"><br>
             <label for="last-name">Last name: </label>
             <input type="text" name="last-name" id="last-name"><br><br>
-            <input type="submit" value="Add Team Member" class="btn btn-success">
+            <input type="radio" name="action" value="add" id="add">
+            <label for="add">Add Team Member</label>
+            <input type="radio" name="action" value="disable" id="disable">
+            <label for="disable">Disable Team Member</label>
+            <input type="radio" name="action" value="reactivate" id="reactivate">
+            <label for="reactivate">Reactivate Team Member</label><br>
+            <input type="submit" value="Submit" class="btn btn-success">
         </form>
     </div>
     <script>
         function showGroups(result) {
             var groups = JSON.parse(result);
             for (var i=0; i < groups.length; i++) {
+                console.log(i);
                 $('#groups').append("<div>" + groups[i].join(", ") + "</div>");
                 $('#groups').append("<br>")
                 }

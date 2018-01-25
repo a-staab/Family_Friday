@@ -11,6 +11,7 @@ class Employee(db.Model):
     staff_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     first_name = db.Column(db.Unicode(30), nullable=False)
     last_name = db.Column(db.Unicode(30), nullable=False)
+    is_active = db.Column(db.Boolean, unique=False, default=True)
 
 
 def connect_to_db(app, db_uri='postgresql:///staff_directory'):
