@@ -83,15 +83,15 @@ def get_table_assignments(teammates, results=None):
 def randomize(assortment):
     """Given a list, randomly reorders its elements."""
     random.shuffle(assortment)
-    return
+    return assortment
 
 
 def get_all_tables():
     """Returns all staff, divided into groups of three, four, and/or five
     people each."""
 
-    teammates = Employee.query.filter(Employee.is_active == 'True').all()
-    randomize(teammates)
+    teammates = randomize(Employee.query.filter(
+        Employee.is_active == 'True').all())
 
     return get_table_assignments(teammates)
 
