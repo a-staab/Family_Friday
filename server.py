@@ -61,6 +61,7 @@ def display_groups():
 
 
 def get_table_assignments(teammates, results=None):
+    # TODO: Update docstring
     """Given a list of teammates, returns a list of tuples of type
     (teammates per table, number of tables) such that the sum of the
     products of the number of tables and teammates per table for all of the
@@ -81,8 +82,8 @@ def get_table_assignments(teammates, results=None):
 
 def randomize(assortment):
     """Given a list, randomly reorders its elements."""
-
     random.shuffle(assortment)
+    return
 
 
 def get_all_tables():
@@ -94,6 +95,7 @@ def get_all_tables():
 
     return get_table_assignments(teammates)
 
+# TODO: Add 'Omitted users' list and display below group assignments
 
 connect_to_db(app)
 
