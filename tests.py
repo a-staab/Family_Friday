@@ -44,7 +44,11 @@ class Test(unittest.TestCase):
     def test_get_table_assignments(self):
         """Unit test. Tests get_table_sizes function."""
 
-        self.assertEqual(get_table_assignments(['name'] * 11), [(5, 1), (3, 2)])
+        self.assertEqual(
+            get_table_assignments(['name'] * 11),
+            [['name', 'name', 'name', 'name', 'name'],
+                ['name', 'name', 'name'],
+                ['name', 'name', 'name']])
 
 
 if __name__ == '__main__':
