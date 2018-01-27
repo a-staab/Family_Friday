@@ -1,7 +1,7 @@
 import unittest
 from server import app
 from model import db, connect_to_db, example_data
-from server import get_table_sizes, get_all_tables
+from server import get_table_assignments, get_all_tables
 
 
 class Test(unittest.TestCase):
@@ -41,10 +41,10 @@ class Test(unittest.TestCase):
         result = get_all_tables()
         self.assertEqual(len(result), 3)
 
-    def test_get_table_sizes(self):
+    def test_get_table_assignments(self):
         """Unit test. Tests get_table_sizes function."""
 
-        self.assertEqual(get_table_sizes(['name'] * 11), [(5, 1), (3, 2)])
+        self.assertEqual(get_table_assignments(['name'] * 11), [(5, 1), (3, 2)])
 
 
 if __name__ == '__main__':
